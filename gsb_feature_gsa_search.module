@@ -1,0 +1,38 @@
+<?php
+/**
+ * @file
+ * Code for the GSB Feature GSA Search feature.
+ */
+
+include_once 'gsb_feature_gsa_search.features.inc';
+
+/**
+ * Implements hook_url_inbound_alter().
+ *
+ * Make search/* URL to actually behave as gsearch/*.
+ */
+function gsb_feature_gsa_search_url_inbound_alter(&$path, $original_path, $path_language) {
+  // This will not allow us to use search module, it will redirect to gsearch instead.
+  if (arg(0, $path) == 'search') {
+    $path = 'gsearch/' . arg(1, $path);
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function gsb_feature_gsa_search_form_alter(&$form, &$form_state, $form_id) {
+  if (in_array($form_id, array('google_appliance_search_form', 'google_appliance_block_form'))) {
+    $form['#action'] = str_replace('gsearch', 'search', $form['#action']);
+    $form['#submit'][] = 'gsb_feature_gsa_search_form_submit';
+  }
+}
+
+/**
+ * Submit callback to alter redirect URL.
+ */
+function gsb_feature_gsa_search_form_submit($form, &$form_state) {
+  // set the redirect according to modified path.
+  $search_query = urlencode($form_state['values']['search_keys']);
+  $form_state['redirect'] = url('search/' . $search_query, array('absolute' => TRUE));
+}
