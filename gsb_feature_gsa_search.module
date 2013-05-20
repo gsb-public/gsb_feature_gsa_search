@@ -36,3 +36,11 @@ function gsb_feature_gsa_search_form_submit($form, &$form_state) {
   $search_query = urlencode($form_state['values']['search_keys']);
   $form_state['redirect'] = url('search/' . $search_query, array('absolute' => TRUE));
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function gsb_feature_gsa_search_form_google_appliance_block_form_alter(&$form, &$form_state) {
+  $form['#attributes']['class'][] = 'grey-search-box';
+  $form['search_keys']['#attributes']['placeholder'][] = t('search');
+}
