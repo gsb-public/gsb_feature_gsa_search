@@ -19,6 +19,17 @@ function gsb_feature_gsa_search_url_inbound_alter(&$path, $original_path, $path_
 }
 
 /**
+ * Implements hook_url_outbound_alter().
+ *
+ * Make gsearch/* links to go to search/* URL.
+ */
+function gsb_feature_gsa_search_url_outbound_alter(&$path, &$options, $original_path) {
+  if (arg(0, $path) == 'gsearch') {
+    $path = str_replace('gsearch', 'search', $path);
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function gsb_feature_gsa_search_form_alter(&$form, &$form_state, $form_id) {
