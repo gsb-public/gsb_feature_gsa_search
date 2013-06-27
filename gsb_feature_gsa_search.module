@@ -39,6 +39,9 @@ function gsb_feature_gsa_search_form_alter(&$form, &$form_state, $form_id) {
     $form['#attributes']['class'][] = 'grey-search-box';
     $form['search_keys']['#attributes']['placeholder'][] = t('search');
   }
+  if ($form_id == 'google_appliance_search_form') {
+    $form['basic']['prompt']['#weight'] = 5;
+  }
 }
 
 /**
