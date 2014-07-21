@@ -21,7 +21,7 @@ function gsb_feature_gsa_search_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'google_appliance_collection';
-  $strongarm->value = 'Public_All';
+  $strongarm->value = 'Revamp';
   $export['google_appliance_collection'] = $strongarm;
 
   $strongarm = new stdClass();
