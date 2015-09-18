@@ -60,3 +60,7 @@ function gsb_feature_gsa_search_form_google_appliance_search_form_alter(&$form, 
   $form['basic']['submit']['#prefix'] = '<div class="form-actions">';
   $form['basic']['submit']['#suffix'] = '</div>';
 }
+
+function gsb_feature_gsa_search_google_appliance_query_alter(&$query) {
+  $query['gsa_query_params']['getfields'] = 'description';
+}
