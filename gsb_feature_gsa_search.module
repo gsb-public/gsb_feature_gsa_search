@@ -6,6 +6,39 @@
 
 include_once 'gsb_feature_gsa_search.features.inc';
 
+define('EXECED_SEARCH', 'exec-ed/search');
+
+/**
+ * Implements hook_menu().
+ */
+function gsb_feature_gsa_search_menu() {
+  $items = array();
+  $settings = _google_appliance_get_settings();
+
+  // search results page
+  $parts = substr_count(EXECED_SEARCH, '/');
+  $items[EXECED_SEARCH] = array(
+    'title' => $settings['search_title'],
+    'page callback' => 'google_appliance_search_view',
+    'page arguments' => array(++$parts, ++$parts), // (1) search query, (2) results sort param
+    'access arguments' => array('access_google_appliance_content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_google_appliance_settings_alter().
+ * 
+ * Changes the collection name for exec-ed search.
+ */
+function gsb_feature_gsa_search_google_appliance_settings_alter(&$settings) {
+  if (strpos($_GET['q'],EXECED_SEARCH) !== false) {
+    $settings['collection'] = 'exed';
+  }
+}
+
 /**
  * Implements hook_url_inbound_alter().
  *
@@ -50,7 +83,12 @@ function gsb_feature_gsa_search_form_alter(&$form, &$form_state, $form_id) {
 function gsb_feature_gsa_search_form_submit($form, &$form_state) {
   // set the redirect according to modified path.
   $search_query = urlencode($form_state['values']['search_keys']);
-  $form_state['redirect'] = url('search/' . $search_query, array('absolute' => TRUE));
+  if (strpos($form['#action'],EXECED_SEARCH) !== false) {
+    $form_state['redirect'] = url(EXECED_SEARCH . '/' . $search_query, array('absolute' => TRUE));
+  }
+  else {
+    $form_state['redirect'] = url('search/' . $search_query, array('absolute' => TRUE));
+  }
 }
 
 /**
