@@ -7,6 +7,7 @@
 include_once 'gsb_feature_gsa_search.features.inc';
 
 define('EXECED_SEARCH', 'exec-ed/search');
+define('SEED_SEARCH', 'seed/search');
 
 /**
  * Implements hook_menu().
@@ -24,6 +25,14 @@ function gsb_feature_gsa_search_menu() {
     'access arguments' => array('access_google_appliance_content'),
     'type' => MENU_SUGGESTED_ITEM,
   );
+  $seed_parts = substr_count(SEED_SEARCH, '/');
+  $items[SEED_SEARCH] = array(
+    'title' => $settings['search_title'],
+    'page callback' => 'google_appliance_search_view',
+    'page arguments' => array(++$seed_parts, ++$seed_parts), // (1) search query, (2) results sort param
+    'access arguments' => array('access_google_appliance_content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
 
   return $items;
 }
@@ -35,7 +44,10 @@ function gsb_feature_gsa_search_menu() {
  */
 function gsb_feature_gsa_search_google_appliance_settings_alter(&$settings) {
   if (strpos($_GET['q'],EXECED_SEARCH) !== false) {
-    $settings['collection'] = 'exed';
+    $settings['collection'] = 'revamp_exec_ed';
+  }
+  if (strpos($_GET['q'],SEED_SEARCH) !== false) {
+    $settings['collection'] = 'revamp_seed';
   }
 }
 
@@ -85,6 +97,9 @@ function gsb_feature_gsa_search_form_submit($form, &$form_state) {
   $search_query = urlencode($form_state['values']['search_keys']);
   if (strpos($form['#action'],EXECED_SEARCH) !== false) {
     $form_state['redirect'] = url(EXECED_SEARCH . '/' . $search_query, array('absolute' => TRUE));
+  }
+  elseif (strpos($form['#action'],SEED_SEARCH) !== false) {
+    $form_state['redirect'] = url(SEED_SEARCH . '/' . $search_query, array('absolute' => TRUE));
   }
   else {
     $form_state['redirect'] = url('search/' . $search_query, array('absolute' => TRUE));
