@@ -42,7 +42,7 @@ function gsb_feature_gsa_search_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'google_appliance_query_inspection';
-  $strongarm->value = '0';
+  $strongarm->value = 0;
   $export['google_appliance_query_inspection'] = $strongarm;
 
   $strongarm = new stdClass();
