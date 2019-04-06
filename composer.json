@@ -1,7 +1,8 @@
 {
-  "name": "drupal/gsb_feature_gsa_search",
+  "name": "gsb/gsb_feature_gsa_search",
   "description": "GSB Feature GSA Search",
   "license": "Apache-2.0",  
+  "type": "drupal-features-module",
   "require": {
     "php": ">=5.3.0",
     "ext-curl": "*",
@@ -11,6 +12,7 @@
     "ext-pdo": "*",
     "ext-xml": "*",
     "cweagans/composer-patches": "^1.6.5",
+    "oomphinc/composer-installers-extender": "^1.1",
     "drupal/google_appliance": "1.14"
   },
   "extra": {
