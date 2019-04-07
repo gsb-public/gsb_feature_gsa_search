@@ -14,15 +14,5 @@
     "cweagans/composer-patches": "^1.6.5",
     "oomphinc/composer-installers-extender": "^1.1",
     "drupal/google_appliance": "1.14"
-  },
-  "extra": {
-    "patches": {
-      "cweagans/composer-patches": {
-        "Call the preserve paths hooks" : "https://github.com/SebCorbin/composer-patches/commit/1cb9bacba51f8bba0c5f3f322c3bb61e4ceae974.patch"
-      },
-      "drupal/google_appliance": {
-        "2626784": "https://www.drupal.org/files/issues/google_appliance-2626784-2.patch"
-      }
-    }
   }
 }
